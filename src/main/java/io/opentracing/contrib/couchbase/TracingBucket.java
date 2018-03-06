@@ -2,6 +2,7 @@ package io.opentracing.contrib.couchbase;
 
 import static io.opentracing.contrib.couchbase.TracingHelper.nullable;
 import static io.opentracing.contrib.couchbase.TracingHelper.nullableClass;
+import static io.opentracing.contrib.couchbase.TracingHelper.onError;
 
 import com.couchbase.client.core.ClusterFacade;
 import com.couchbase.client.core.annotations.InterfaceAudience.Public;
@@ -78,7 +79,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.get(id);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -95,7 +96,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.get(id, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -108,7 +109,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.get(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -124,7 +125,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.get(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -140,7 +141,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.get(id, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -158,7 +159,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.get(id, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -172,7 +173,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.exists(id);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -188,7 +189,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.exists(id, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -201,7 +202,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.exists(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -217,7 +218,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.exists(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -233,7 +234,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id, type);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -248,7 +249,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -267,7 +268,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id, type, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -284,7 +285,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -299,7 +300,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(document, type);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -313,7 +314,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -331,7 +332,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(document, type, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -347,7 +348,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -364,7 +365,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id, type, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -380,7 +381,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -400,7 +401,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id, type, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -418,7 +419,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getFromReplica(id, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -433,7 +434,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndLock(id, lockTime);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -451,7 +452,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndLock(id, lockTime, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -466,7 +467,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndLock(document, lockTime);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -483,7 +484,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndLock(document, lockTime, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -500,7 +501,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndLock(id, lockTime, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -519,7 +520,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndLock(id, lockTime, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -534,7 +535,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndTouch(id, expiry);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -552,7 +553,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndTouch(id, expiry, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -565,7 +566,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndTouch(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -581,7 +582,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndTouch(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -598,7 +599,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndTouch(id, expiry, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -617,7 +618,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.getAndTouch(id, expiry, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -630,7 +631,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -646,7 +647,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -663,7 +664,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -683,7 +684,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -698,7 +699,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -716,7 +717,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -731,7 +732,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -749,7 +750,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.insert(document, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -762,7 +763,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -778,7 +779,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -795,7 +796,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -815,7 +816,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -830,7 +831,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -848,7 +849,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -863,7 +864,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -881,7 +882,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.upsert(document, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -894,7 +895,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -910,7 +911,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -927,7 +928,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -947,7 +948,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -962,7 +963,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -980,7 +981,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -995,7 +996,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1013,7 +1014,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.replace(document, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1026,7 +1027,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1042,7 +1043,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1059,7 +1060,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1079,7 +1080,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1094,7 +1095,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1112,7 +1113,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1127,7 +1128,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1145,7 +1146,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(document, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1159,7 +1160,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1176,7 +1177,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1194,7 +1195,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1215,7 +1216,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1231,7 +1232,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1250,7 +1251,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1266,7 +1267,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1285,7 +1286,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1301,7 +1302,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1319,7 +1320,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1338,7 +1339,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo, replicateTo, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1360,7 +1361,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo, replicateTo, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1377,7 +1378,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1397,7 +1398,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, persistTo, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1414,7 +1415,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, replicateTo, target);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1434,7 +1435,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.remove(id, replicateTo, target, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1449,7 +1450,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1464,7 +1465,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1482,7 +1483,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1500,7 +1501,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1515,7 +1516,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(statement);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1533,7 +1534,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(statement, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1548,7 +1549,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1566,7 +1567,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1582,7 +1583,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1601,7 +1602,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1617,7 +1618,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1636,7 +1637,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.query(query, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1651,7 +1652,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.unlock(id, cas);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1668,7 +1669,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.unlock(id, cas, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1681,7 +1682,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.unlock(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1697,7 +1698,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.unlock(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1712,7 +1713,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.touch(id, expiry);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1729,7 +1730,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.touch(id, expiry, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1742,7 +1743,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.touch(document);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1758,7 +1759,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.touch(document, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1773,7 +1774,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1790,7 +1791,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1807,7 +1808,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1826,7 +1827,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1844,7 +1845,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1864,7 +1865,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1884,7 +1885,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1906,7 +1907,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1923,7 +1924,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1941,7 +1942,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1959,7 +1960,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1979,7 +1980,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -1998,7 +1999,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2019,7 +2020,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2040,7 +2041,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2063,7 +2064,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2081,7 +2082,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2100,7 +2101,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry, persistTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2119,7 +2120,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2140,7 +2141,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry, persistTo, replicateTo);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2160,7 +2161,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2182,7 +2183,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry, persistTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2204,7 +2205,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2228,7 +2229,7 @@ public class TracingBucket implements Bucket {
     try {
       return bucket.counter(id, delta, initial, expiry, persistTo, replicateTo, timeout, timeUnit);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -2237,46 +2238,114 @@ public class TracingBucket implements Bucket {
 
   @Override
   public <D extends Document<?>> D append(D document) {
-    return bucket.append(document);
+    Span span = helper.buildSpan("append");
+    try {
+      return bucket.append(document);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D append(D document,
       PersistTo persistTo) {
-    return bucket.append(document, persistTo);
+    Span span = helper.buildSpan("append");
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.append(document, persistTo);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D append(D document,
       ReplicateTo replicateTo) {
-    return bucket.append(document, replicateTo);
+    Span span = helper.buildSpan("append");
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.append(document, replicateTo);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D append(D document,
       PersistTo persistTo,
       ReplicateTo replicateTo) {
-    return bucket.append(document, persistTo, replicateTo);
+    Span span = helper.buildSpan("append");
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.append(document, persistTo, replicateTo);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D append(D document, long timeout,
       TimeUnit timeUnit) {
-    return bucket.append(document, timeout, timeUnit);
+    Span span = helper.buildSpan("append");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.append(document, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D append(D document,
       PersistTo persistTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.append(document, persistTo, timeout, timeUnit);
+    Span span = helper.buildSpan("append");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.append(document, persistTo, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D append(D document,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.append(document, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("append");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.append(document, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2284,51 +2353,131 @@ public class TracingBucket implements Bucket {
       PersistTo persistTo,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.append(document, persistTo, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("append");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.append(document, persistTo, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D prepend(D document) {
-    return bucket.prepend(document);
+    Span span = helper.buildSpan("prepend");
+    try {
+      return bucket.prepend(document);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D prepend(D document,
       PersistTo persistTo) {
-    return bucket.prepend(document, persistTo);
+    Span span = helper.buildSpan("prepend");
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.prepend(document, persistTo);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D prepend(D document,
       ReplicateTo replicateTo) {
-    return bucket.prepend(document, replicateTo);
+    Span span = helper.buildSpan("prepend");
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.prepend(document, replicateTo);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D prepend(D document,
       PersistTo persistTo,
       ReplicateTo replicateTo) {
-    return bucket.prepend(document, persistTo, replicateTo);
+    Span span = helper.buildSpan("prepend");
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.prepend(document, persistTo, replicateTo);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D prepend(D document, long timeout,
       TimeUnit timeUnit) {
-    return bucket.prepend(document, timeout, timeUnit);
+    Span span = helper.buildSpan("prepend");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.prepend(document, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D prepend(D document,
       PersistTo persistTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.prepend(document, persistTo, timeout, timeUnit);
+    Span span = helper.buildSpan("prepend");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.prepend(document, persistTo, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D prepend(D document,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.prepend(document, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("prepend");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.prepend(document, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2336,7 +2485,19 @@ public class TracingBucket implements Bucket {
       PersistTo persistTo,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.prepend(document, persistTo, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("prepend");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.prepend(document, persistTo, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2357,7 +2518,18 @@ public class TracingBucket implements Bucket {
   @Committed
   @Public
   public <V> boolean mapAdd(String docId, String key, V value) {
-    return bucket.mapAdd(docId, key, value);
+    Span span = helper.buildSpan("mapAdd");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("value", nullable(value));
+    try {
+      return bucket.mapAdd(docId, key, value);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2365,7 +2537,20 @@ public class TracingBucket implements Bucket {
   @Public
   public <V> boolean mapAdd(String docId, String key, V value, long timeout,
       TimeUnit timeUnit) {
-    return bucket.mapAdd(docId, key, value, timeout, timeUnit);
+    Span span = helper.buildSpan("mapAdd");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("value", nullable(value));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.mapAdd(docId, key, value, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2373,7 +2558,18 @@ public class TracingBucket implements Bucket {
   @Public
   public <V> boolean mapAdd(String docId, String key, V value,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.mapAdd(docId, key, value, mutationOptionBuilder);
+    Span span = helper.buildSpan("mapAdd");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("value", nullable(value));
+    try {
+      return bucket.mapAdd(docId, key, value, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2382,14 +2578,38 @@ public class TracingBucket implements Bucket {
   public <V> boolean mapAdd(String docId, String key, V value,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.mapAdd(docId, key, value, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("mapAdd");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("value", nullable(value));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.mapAdd(docId, key, value, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <V> V mapGet(String docId, String key, Class<V> valueType) {
-    return bucket.mapGet(docId, key, valueType);
+    Span span = helper.buildSpan("mapGet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("valueType", nullable(valueType));
+    try {
+      return bucket.mapGet(docId, key, valueType);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2397,14 +2617,37 @@ public class TracingBucket implements Bucket {
   @Public
   public <V> V mapGet(String docId, String key, Class<V> valueType, long timeout,
       TimeUnit timeUnit) {
-    return bucket.mapGet(docId, key, valueType, timeout, timeUnit);
+    Span span = helper.buildSpan("mapGet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("valueType", nullable(valueType));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.mapGet(docId, key, valueType, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public boolean mapRemove(String docId, String key) {
-    return bucket.mapRemove(docId, key);
+    Span span = helper.buildSpan("mapRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    try {
+      return bucket.mapRemove(docId, key);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2412,7 +2655,19 @@ public class TracingBucket implements Bucket {
   @Public
   public boolean mapRemove(String docId, String key, long timeout,
       TimeUnit timeUnit) {
-    return bucket.mapRemove(docId, key, timeout, timeUnit);
+    Span span = helper.buildSpan("mapRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.mapRemove(docId, key, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2420,7 +2675,17 @@ public class TracingBucket implements Bucket {
   @Public
   public boolean mapRemove(String docId, String key,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.mapRemove(docId, key, mutationOptionBuilder);
+    Span span = helper.buildSpan("mapRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    try {
+      return bucket.mapRemove(docId, key, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2429,21 +2694,53 @@ public class TracingBucket implements Bucket {
   public boolean mapRemove(String docId, String key,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.mapRemove(docId, key, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("mapRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("key", nullable(key));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.mapRemove(docId, key, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int mapSize(String docId) {
-    return bucket.mapSize(docId);
+    Span span = helper.buildSpan("mapSize");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.mapSize(docId);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int mapSize(String docId, long timeout, TimeUnit timeUnit) {
-    return bucket.mapSize(docId, timeout, timeUnit);
+    Span span = helper.buildSpan("mapSize");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.mapSize(docId, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override

@@ -1,5 +1,8 @@
 package io.opentracing.contrib.couchbase;
 
+import static io.opentracing.contrib.couchbase.TracingHelper.nullable;
+import static io.opentracing.contrib.couchbase.TracingHelper.onError;
+
 import com.couchbase.client.core.ClusterFacade;
 import com.couchbase.client.core.annotations.InterfaceAudience.Public;
 import com.couchbase.client.core.annotations.InterfaceStability.Experimental;
@@ -38,7 +41,7 @@ public class TracingCluster implements Cluster {
     try {
       return new TracingBucket(cluster.openBucket(), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -50,11 +53,11 @@ public class TracingCluster implements Cluster {
       TimeUnit timeUnit) {
     Span span = helper.buildSpan("openBucket");
     span.setTag("timeout", timeout);
-    span.setTag("timeUnit", TracingHelper.nullable(timeUnit));
+    span.setTag("timeUnit", nullable(timeUnit));
     try {
       return new TracingBucket(cluster.openBucket(timeout, timeUnit), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -68,7 +71,7 @@ public class TracingCluster implements Cluster {
     try {
       return new TracingBucket(cluster.openBucket(name), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -81,11 +84,11 @@ public class TracingCluster implements Cluster {
     Span span = helper.buildSpan("openBucket");
     span.setTag("name", name);
     span.setTag("timeout", timeout);
-    span.setTag("timeUnit", TracingHelper.nullable(timeUnit));
+    span.setTag("timeUnit", nullable(timeUnit));
     try {
       return new TracingBucket(cluster.openBucket(name, timeout, timeUnit), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -101,7 +104,7 @@ public class TracingCluster implements Cluster {
     try {
       return new TracingBucket(cluster.openBucket(name, transcoders), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -115,12 +118,12 @@ public class TracingCluster implements Cluster {
     Span span = helper.buildSpan("openBucket");
     span.setTag("name", name);
     span.setTag("timeout", timeout);
-    span.setTag("timeUnit", TracingHelper.nullable(timeUnit));
+    span.setTag("timeUnit", nullable(timeUnit));
     span.setTag("transcoders", TracingHelper.toString(transcoders));
     try {
       return new TracingBucket(cluster.openBucket(name, transcoders, timeout, timeUnit), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -134,7 +137,7 @@ public class TracingCluster implements Cluster {
     try {
       return new TracingBucket(cluster.openBucket(name, password), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -147,11 +150,11 @@ public class TracingCluster implements Cluster {
     Span span = helper.buildSpan("openBucket");
     span.setTag("name", name);
     span.setTag("timeout", timeout);
-    span.setTag("timeUnit", TracingHelper.nullable(timeUnit));
+    span.setTag("timeUnit", nullable(timeUnit));
     try {
       return new TracingBucket(cluster.openBucket(name, password, timeout, timeUnit), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -167,7 +170,7 @@ public class TracingCluster implements Cluster {
     try {
       return new TracingBucket(cluster.openBucket(name, password, transcoders), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
@@ -181,12 +184,12 @@ public class TracingCluster implements Cluster {
     Span span = helper.buildSpan("openBucket");
     span.setTag("name", name);
     span.setTag("timeout", timeout);
-    span.setTag("timeUnit", TracingHelper.nullable(timeUnit));
+    span.setTag("timeUnit", nullable(timeUnit));
     span.setTag("transcoders", TracingHelper.toString(transcoders));
     try {
       return new TracingBucket(cluster.openBucket(name, password, transcoders, timeout, timeUnit), helper);
     } catch (Exception e) {
-      TracingHelper.onError(e, span);
+      onError(e, span);
       throw e;
     } finally {
       span.finish();
