@@ -1,6 +1,7 @@
 package io.opentracing.contrib.couchbase;
 
 import static io.opentracing.contrib.couchbase.TracingHelper.nullable;
+import static io.opentracing.contrib.couchbase.TracingHelper.nullableClass;
 
 import com.couchbase.client.core.ClusterFacade;
 import com.couchbase.client.core.annotations.InterfaceAudience.Public;
@@ -1276,26 +1277,72 @@ public class TracingBucket implements Bucket {
   public JsonDocument remove(String id,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.remove(id, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("replicateTo", nullable(replicateTo));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.remove(id, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D remove(String id,
       Class<D> target) {
-    return bucket.remove(id, target);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    try {
+      return bucket.remove(id, target);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D remove(String id,
       Class<D> target, long timeout, TimeUnit timeUnit) {
-    return bucket.remove(id, target, timeout, timeUnit);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.remove(id, target, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D remove(String id,
       PersistTo persistTo,
       ReplicateTo replicateTo, Class<D> target) {
-    return bucket.remove(id, persistTo, replicateTo, target);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.remove(id, persistTo, replicateTo, target);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -1303,92 +1350,243 @@ public class TracingBucket implements Bucket {
       PersistTo persistTo,
       ReplicateTo replicateTo, Class<D> target, long timeout,
       TimeUnit timeUnit) {
-    return bucket.remove(id, persistTo, replicateTo, target, timeout, timeUnit);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.remove(id, persistTo, replicateTo, target, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D remove(String id,
       PersistTo persistTo, Class<D> target) {
-    return bucket.remove(id, persistTo, target);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.remove(id, persistTo, target);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D remove(String id,
       PersistTo persistTo, Class<D> target, long timeout,
       TimeUnit timeUnit) {
-    return bucket.remove(id, persistTo, target, timeout, timeUnit);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.remove(id, persistTo, target, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D remove(String id,
       ReplicateTo replicateTo, Class<D> target) {
-    return bucket.remove(id, replicateTo, target);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.remove(id, replicateTo, target);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> D remove(String id,
       ReplicateTo replicateTo, Class<D> target, long timeout,
       TimeUnit timeUnit) {
-    return bucket.remove(id, replicateTo, target, timeout, timeUnit);
+    Span span = helper.buildSpan("remove");
+    span.setTag("id", nullable(id));
+    span.setTag("target", nullable(target));
+    span.setTag("replicateTo", nullable(replicateTo));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.remove(id, replicateTo, target, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public ViewResult query(
       ViewQuery query) {
-    return bucket.query(query);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    try {
+      return bucket.query(query);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public SpatialViewResult query(
       SpatialViewQuery query) {
-    return bucket.query(query);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    try {
+      return bucket.query(query);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public ViewResult query(
       ViewQuery query, long timeout,
       TimeUnit timeUnit) {
-    return bucket.query(query, timeout, timeUnit);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.query(query, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public SpatialViewResult query(
       SpatialViewQuery query, long timeout,
       TimeUnit timeUnit) {
-    return bucket.query(query, timeout, timeUnit);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.query(query, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public N1qlQueryResult query(
       Statement statement) {
-    return bucket.query(statement);
+    Span span = helper.buildSpan("query");
+    span.setTag("statement", nullableClass(statement));
+    try {
+      return bucket.query(statement);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public N1qlQueryResult query(
       Statement statement, long timeout,
       TimeUnit timeUnit) {
-    return bucket.query(statement, timeout, timeUnit);
+    Span span = helper.buildSpan("query");
+    span.setTag("statement", nullableClass(statement));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.query(statement, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public N1qlQueryResult query(
       N1qlQuery query) {
-    return bucket.query(query);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    try {
+      return bucket.query(query);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public N1qlQueryResult query(
       N1qlQuery query, long timeout,
       TimeUnit timeUnit) {
-    return bucket.query(query, timeout, timeUnit);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.query(query, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   public SearchQueryResult query(
       SearchQuery query) {
-    return bucket.query(query);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    try {
+      return bucket.query(query);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -1396,14 +1594,34 @@ public class TracingBucket implements Bucket {
   public SearchQueryResult query(
       SearchQuery query, long timeout,
       TimeUnit timeUnit) {
-    return bucket.query(query, timeout, timeUnit);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.query(query, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Uncommitted
   public AnalyticsQueryResult query(
       AnalyticsQuery query) {
-    return bucket.query(query);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    try {
+      return bucket.query(query);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -1411,93 +1629,266 @@ public class TracingBucket implements Bucket {
   public AnalyticsQueryResult query(
       AnalyticsQuery query, long timeout,
       TimeUnit timeUnit) {
-    return bucket.query(query, timeout, timeUnit);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullable(query));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.query(query, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public Boolean unlock(String id, long cas) {
-    return bucket.unlock(id, cas);
+    Span span = helper.buildSpan("unlock");
+    span.setTag("id", nullable(id));
+    span.setTag("cas", cas);
+    try {
+      return bucket.unlock(id, cas);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public Boolean unlock(String id, long cas, long timeout, TimeUnit timeUnit) {
-    return bucket.unlock(id, cas, timeout, timeUnit);
+    Span span = helper.buildSpan("unlock");
+    span.setTag("id", nullable(id));
+    span.setTag("cas", cas);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.unlock(id, cas, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> Boolean unlock(D document) {
-    return bucket.unlock(document);
+    Span span = helper.buildSpan("unlock");
+    try {
+      return bucket.unlock(document);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> Boolean unlock(D document,
       long timeout, TimeUnit timeUnit) {
-    return bucket.unlock(document, timeout, timeUnit);
+    Span span = helper.buildSpan("unlock");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.unlock(document, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public Boolean touch(String id, int expiry) {
-    return bucket.touch(id, expiry);
+    Span span = helper.buildSpan("touch");
+    span.setTag("id", nullable(id));
+    span.setTag("expiry", expiry);
+    try {
+      return bucket.touch(id, expiry);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public Boolean touch(String id, int expiry, long timeout, TimeUnit timeUnit) {
-    return bucket.touch(id, expiry, timeout, timeUnit);
+    Span span = helper.buildSpan("touch");
+    span.setTag("id", nullable(id));
+    span.setTag("expiry", expiry);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.touch(id, expiry, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> Boolean touch(D document) {
-    return bucket.touch(document);
+    Span span = helper.buildSpan("touch");
+    try {
+      return bucket.touch(document);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public <D extends Document<?>> Boolean touch(D document,
       long timeout, TimeUnit timeUnit) {
-    return bucket.touch(document, timeout, timeUnit);
+    Span span = helper.buildSpan("touch");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.touch(document, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta) {
-    return bucket.counter(id, delta);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    try {
+      return bucket.counter(id, delta);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       PersistTo persistTo) {
-    return bucket.counter(id, delta, persistTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.counter(id, delta, persistTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       ReplicateTo replicateTo) {
-    return bucket.counter(id, delta, replicateTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, replicateTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       PersistTo persistTo,
       ReplicateTo replicateTo) {
-    return bucket.counter(id, delta, persistTo, replicateTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, persistTo, replicateTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long timeout, TimeUnit timeUnit) {
-    return bucket.counter(id, delta, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.counter(id, delta, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       PersistTo persistTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, persistTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.counter(id, delta, persistTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -1505,52 +1896,155 @@ public class TracingBucket implements Bucket {
       PersistTo persistTo,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, persistTo, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, persistTo, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial) {
-    return bucket.counter(id, delta, initial);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    try {
+      return bucket.counter(id, delta, initial);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, PersistTo persistTo) {
-    return bucket.counter(id, delta, initial, persistTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.counter(id, delta, initial, persistTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, ReplicateTo replicateTo) {
-    return bucket.counter(id, delta, initial, replicateTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, replicateTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, PersistTo persistTo,
       ReplicateTo replicateTo) {
-    return bucket.counter(id, delta, initial, persistTo, replicateTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, persistTo, replicateTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, long timeout, TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.counter(id, delta, initial, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, PersistTo persistTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, persistTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.counter(id, delta, initial, persistTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -1558,52 +2052,163 @@ public class TracingBucket implements Bucket {
       long initial, PersistTo persistTo,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, persistTo, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, persistTo, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, int expiry) {
-    return bucket.counter(id, delta, initial, expiry);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    try {
+      return bucket.counter(id, delta, initial, expiry);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, int expiry, PersistTo persistTo) {
-    return bucket.counter(id, delta, initial, expiry, persistTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.counter(id, delta, initial, expiry, persistTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, int expiry, ReplicateTo replicateTo) {
-    return bucket.counter(id, delta, initial, expiry, replicateTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, expiry, replicateTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, int expiry, PersistTo persistTo,
       ReplicateTo replicateTo) {
-    return bucket.counter(id, delta, initial, expiry, persistTo, replicateTo);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, expiry, persistTo, replicateTo);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, int expiry, long timeout, TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, expiry, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.counter(id, delta, initial, expiry, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, int expiry, PersistTo persistTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, expiry, persistTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    try {
+      return bucket.counter(id, delta, initial, expiry, persistTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public JsonLongDocument counter(String id, long delta,
       long initial, int expiry, ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, expiry, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, expiry, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -1611,7 +2216,23 @@ public class TracingBucket implements Bucket {
       long initial, int expiry, PersistTo persistTo,
       ReplicateTo replicateTo, long timeout,
       TimeUnit timeUnit) {
-    return bucket.counter(id, delta, initial, expiry, persistTo, replicateTo, timeout, timeUnit);
+    Span span = helper.buildSpan("counter");
+    span.setTag("id", nullable(id));
+    span.setTag("delta", delta);
+    span.setTag("initial", initial);
+    span.setTag("expiry", expiry);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    span.setTag("persistTo", nullable(persistTo));
+    span.setTag("replicateTo", nullable(replicateTo));
+    try {
+      return bucket.counter(id, delta, initial, expiry, persistTo, replicateTo, timeout, timeUnit);
+    } catch (Exception e) {
+      TracingHelper.onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override

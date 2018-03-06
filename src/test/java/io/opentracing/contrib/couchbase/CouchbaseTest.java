@@ -18,12 +18,12 @@ import io.opentracing.util.ThreadLocalScopeManager;
 import org.junit.Test;
 
 public class CouchbaseTest {
+
   private MockTracer mockTracer = new MockTracer(new ThreadLocalScopeManager(),
       MockTracer.Propagator.TEXT_MAP);
 
   @Test
   public void test() {
-// Initialize the Connection
     Cluster cluster = new TracingCluster(CouchbaseCluster.create("localhost"), mockTracer, false);
     cluster.authenticate("Administrator", "password");
 
@@ -40,7 +40,6 @@ public class CouchbaseTest {
     }
 
     Bucket bucket = cluster.openBucket("default");
-
 
     // Create a JSON Document
     JsonObject arthur = JsonObject.create()
@@ -60,7 +59,7 @@ public class CouchbaseTest {
 
     // Perform a N1QL Query
     N1qlQueryResult result = bucket.query(
-        N1qlQuery.parameterized("SELECT name FROM bucketname WHERE $1 IN interests",
+        N1qlQuery.parameterized("SELECT name FROM default WHERE $1 IN interests",
             JsonArray.from("African Swallows"))
     );
 
