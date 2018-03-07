@@ -1,6 +1,7 @@
 package io.opentracing.contrib.couchbase;
 
 import static io.opentracing.contrib.couchbase.TracingHelper.nullable;
+import static io.opentracing.contrib.couchbase.TracingHelper.nullableClass;
 import static io.opentracing.contrib.couchbase.TracingHelper.onError;
 
 import com.couchbase.client.core.ClusterFacade;
@@ -100,7 +101,7 @@ public class TracingCluster implements Cluster {
       List<Transcoder<? extends Document, ?>> transcoders) {
     Span span = helper.buildSpan("openBucket");
     span.setTag("name", name);
-    span.setTag("transcoders", TracingHelper.toString(transcoders));
+    span.setTag("transcoders", TracingHelper.toStringClass(transcoders));
     try {
       return new TracingBucket(cluster.openBucket(name, transcoders), helper);
     } catch (Exception e) {
@@ -119,7 +120,7 @@ public class TracingCluster implements Cluster {
     span.setTag("name", name);
     span.setTag("timeout", timeout);
     span.setTag("timeUnit", nullable(timeUnit));
-    span.setTag("transcoders", TracingHelper.toString(transcoders));
+    span.setTag("transcoders", TracingHelper.toStringClass(transcoders));
     try {
       return new TracingBucket(cluster.openBucket(name, transcoders, timeout, timeUnit), helper);
     } catch (Exception e) {
@@ -166,7 +167,7 @@ public class TracingCluster implements Cluster {
       List<Transcoder<? extends Document, ?>> transcoders) {
     Span span = helper.buildSpan("openBucket");
     span.setTag("name", name);
-    span.setTag("transcoders", TracingHelper.toString(transcoders));
+    span.setTag("transcoders", TracingHelper.toStringClass(transcoders));
     try {
       return new TracingBucket(cluster.openBucket(name, password, transcoders), helper);
     } catch (Exception e) {
@@ -185,9 +186,10 @@ public class TracingCluster implements Cluster {
     span.setTag("name", name);
     span.setTag("timeout", timeout);
     span.setTag("timeUnit", nullable(timeUnit));
-    span.setTag("transcoders", TracingHelper.toString(transcoders));
+    span.setTag("transcoders", TracingHelper.toStringClass(transcoders));
     try {
-      return new TracingBucket(cluster.openBucket(name, password, transcoders, timeout, timeUnit), helper);
+      return new TracingBucket(cluster.openBucket(name, password, transcoders, timeout, timeUnit),
+          helper);
     } catch (Exception e) {
       onError(e, span);
       throw e;
@@ -200,7 +202,16 @@ public class TracingCluster implements Cluster {
   @Uncommitted
   public N1qlQueryResult query(
       N1qlQuery query) {
-    return cluster.query(query);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullableClass(query));
+    try {
+      return cluster.query(query);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -208,32 +219,62 @@ public class TracingCluster implements Cluster {
   public N1qlQueryResult query(
       N1qlQuery query, long timeout,
       TimeUnit timeUnit) {
-    return cluster.query(query, timeout, timeUnit);
+    Span span = helper.buildSpan("query");
+    span.setTag("query", nullableClass(query));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return cluster.query(query, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public ClusterManager clusterManager(String username,
       String password) {
-    return new TracingClusterManager(cluster.clusterManager(username, password));
+    return new TracingClusterManager(cluster.clusterManager(username, password), helper);
   }
 
   @Override
   public ClusterManager clusterManager() {
-    return new TracingClusterManager(cluster.clusterManager());
+    return new TracingClusterManager(cluster.clusterManager(), helper);
   }
 
   @Override
   public Boolean disconnect() {
-    return cluster.disconnect();
+    Span span = helper.buildSpan("disconnect");
+    try {
+      return cluster.disconnect();
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public Boolean disconnect(long timeout, TimeUnit timeUnit) {
-    return cluster.disconnect(timeout, timeUnit);
+    Span span = helper.buildSpan("disconnect");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return cluster.disconnect(timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public ClusterFacade core() {
+    // TODO: tracing ClusterFacade
     return cluster.core();
   }
 
@@ -252,7 +293,15 @@ public class TracingCluster implements Cluster {
   @Experimental
   @Public
   public DiagnosticsReport diagnostics() {
-    return cluster.diagnostics();
+    Span span = helper.buildSpan("diagnostics");
+    try {
+      return cluster.diagnostics();
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -260,6 +309,15 @@ public class TracingCluster implements Cluster {
   @Public
   public DiagnosticsReport diagnostics(
       String reportId) {
-    return cluster.diagnostics(reportId);
+    Span span = helper.buildSpan("diagnostics");
+    span.setTag("reportId", nullable(reportId));
+    try {
+      return cluster.diagnostics(reportId);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 }

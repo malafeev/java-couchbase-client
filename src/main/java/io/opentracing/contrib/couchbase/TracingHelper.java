@@ -1,11 +1,11 @@
 package io.opentracing.contrib.couchbase;
 
-import com.couchbase.client.java.transcoder.Transcoder;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.Tracer.SpanBuilder;
 import io.opentracing.noop.NoopSpan;
 import io.opentracing.tag.Tags;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,7 @@ public class TracingHelper {
 
   private final Tracer tracer;
   private final boolean traceWithActiveSpanOnly;
-  private static final String COMPONENT_NAME = "java-couchbase";
+  static final String COMPONENT_NAME = "java-couchbase";
 
   public TracingHelper(Tracer tracer, boolean traceWithActiveSpanOnly) {
     this.tracer = tracer;
@@ -59,7 +59,7 @@ public class TracingHelper {
     return object == null ? "null" : object.getClass().getName();
   }
 
-  public static String toString(List<?> list) {
+  public static String toStringClass(List<?> list) {
     if (list == null) {
       return "null";
     }
@@ -69,6 +69,24 @@ public class TracingHelper {
         builder.append(nullableClass(list.get(i)));
       } else {
         builder.append(", ").append(nullableClass(list.get(i)));
+      }
+    }
+
+    return builder.toString();
+  }
+
+  public static String toString(Collection<?> collection) {
+    if (collection == null) {
+      return "null";
+    }
+    boolean first = true;
+    StringBuilder builder = new StringBuilder();
+    for (Object element : collection) {
+      if (first) {
+        builder.append(nullable(element));
+        first = false;
+      } else {
+        builder.append(", ").append(nullable(element));
       }
     }
 

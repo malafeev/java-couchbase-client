@@ -54,11 +54,13 @@ public class TracingBucket implements Bucket {
 
   @Override
   public AsyncBucket async() {
+    // TODO: tracing AsyncBucket?
     return bucket.async();
   }
 
   @Override
   public ClusterFacade core() {
+    // TODO: tracing ClusterFacade?
     return bucket.core();
   }
 
@@ -3508,11 +3510,20 @@ public class TracingBucket implements Bucket {
 
   @Override
   public int invalidateQueryCache() {
-    return bucket.invalidateQueryCache();
+    Span span = helper.buildSpan("invalidateQueryCache");
+    try {
+      return bucket.invalidateQueryCache();
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public BucketManager bucketManager() {
+    // TODO: tracing BucketManager ?
     return bucket.bucketManager();
   }
 
@@ -3520,17 +3531,36 @@ public class TracingBucket implements Bucket {
   @Public
   @Experimental
   public Repository repository() {
+    // TODO: tracing Repository?
     return bucket.repository();
   }
 
   @Override
   public Boolean close() {
-    return bucket.close();
+    Span span = helper.buildSpan("close");
+    try {
+      return bucket.close();
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public Boolean close(long timeout, TimeUnit timeUnit) {
-    return bucket.close(timeout, timeUnit);
+    Span span = helper.buildSpan("close");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.close(timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -3540,51 +3570,129 @@ public class TracingBucket implements Bucket {
 
   @Override
   public PingReport ping(String reportId) {
-    return bucket.ping(reportId);
+    Span span = helper.buildSpan("ping");
+    span.setTag("reportId", nullable(reportId));
+    try {
+      return bucket.ping(reportId);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public PingReport ping(String reportId, long timeout,
       TimeUnit timeUnit) {
-    return bucket.ping(reportId, timeout, timeUnit);
+    Span span = helper.buildSpan("ping");
+    span.setTag("reportId", nullable(reportId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.ping(reportId, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public PingReport ping() {
-    return bucket.ping();
+    Span span = helper.buildSpan("ping");
+    try {
+      return bucket.ping();
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public PingReport ping(long timeout,
       TimeUnit timeUnit) {
-    return bucket.ping(timeout, timeUnit);
+    Span span = helper.buildSpan("ping");
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.ping(timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public PingReport ping(
       Collection<ServiceType> services) {
-    return bucket.ping(services);
+    Span span = helper.buildSpan("ping");
+    span.setTag("services", TracingHelper.toString(services));
+    try {
+      return bucket.ping(services);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public PingReport ping(
       Collection<ServiceType> services, long timeout,
       TimeUnit timeUnit) {
-    return bucket.ping(services, timeout, timeUnit);
+    Span span = helper.buildSpan("ping");
+    span.setTag("services", TracingHelper.toString(services));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.ping(services, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public PingReport ping(String reportId,
       Collection<ServiceType> services) {
-    return bucket.ping(reportId, services);
+    Span span = helper.buildSpan("ping");
+    span.setTag("reportId", nullable(reportId));
+    span.setTag("services", TracingHelper.toString(services));
+    try {
+      return bucket.ping(reportId, services);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   public PingReport ping(String reportId,
       Collection<ServiceType> services, long timeout,
       TimeUnit timeUnit) {
-    return bucket.ping(reportId, services, timeout, timeUnit);
+    Span span = helper.buildSpan("ping");
+    span.setTag("reportId", nullable(reportId));
+    span.setTag("services", TracingHelper.toString(services));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.ping(reportId, services, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
-
-
 }
