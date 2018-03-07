@@ -2747,7 +2747,18 @@ public class TracingBucket implements Bucket {
   @Committed
   @Public
   public <E> E listGet(String docId, int index, Class<E> elementType) {
-    return bucket.listGet(docId, index, elementType);
+    Span span = helper.buildSpan("listGet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    span.setTag("elementType", nullable(elementType));
+    try {
+      return bucket.listGet(docId, index, elementType);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2755,14 +2766,36 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> E listGet(String docId, int index, Class<E> elementType, long timeout,
       TimeUnit timeUnit) {
-    return bucket.listGet(docId, index, elementType, timeout, timeUnit);
+    Span span = helper.buildSpan("listGet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    span.setTag("elementType", nullable(elementType));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listGet(docId, index, elementType, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> boolean listAppend(String docId, E element) {
-    return bucket.listAppend(docId, element);
+    Span span = helper.buildSpan("listAppend");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.listAppend(docId, element);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2770,7 +2803,18 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean listAppend(String docId, E element, long timeout,
       TimeUnit timeUnit) {
-    return bucket.listAppend(docId, element, timeout, timeUnit);
+    Span span = helper.buildSpan("listAppend");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listAppend(docId, element, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2778,7 +2822,16 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean listAppend(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.listAppend(docId, element, mutationOptionBuilder);
+    Span span = helper.buildSpan("listAppend");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.listAppend(docId, element, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2787,14 +2840,35 @@ public class TracingBucket implements Bucket {
   public <E> boolean listAppend(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.listAppend(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("listAppend");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listAppend(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public boolean listRemove(String docId, int index) {
-    return bucket.listRemove(docId, index);
+    Span span = helper.buildSpan("listRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    try {
+      return bucket.listRemove(docId, index);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2802,7 +2876,19 @@ public class TracingBucket implements Bucket {
   @Public
   public boolean listRemove(String docId, int index, long timeout,
       TimeUnit timeUnit) {
-    return bucket.listRemove(docId, index, timeout, timeUnit);
+    Span span = helper.buildSpan("listRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listRemove(docId, index, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2810,7 +2896,17 @@ public class TracingBucket implements Bucket {
   @Public
   public boolean listRemove(String docId, int index,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.listRemove(docId, index, mutationOptionBuilder);
+    Span span = helper.buildSpan("listRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    try {
+      return bucket.listRemove(docId, index, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2819,14 +2915,35 @@ public class TracingBucket implements Bucket {
   public boolean listRemove(String docId, int index,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.listRemove(docId, index, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("listRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listRemove(docId, index, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> boolean listPrepend(String docId, E element) {
-    return bucket.listPrepend(docId, element);
+    Span span = helper.buildSpan("listPrepend");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.listPrepend(docId, element);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2834,7 +2951,18 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean listPrepend(String docId, E element, long timeout,
       TimeUnit timeUnit) {
-    return bucket.listPrepend(docId, element, timeout, timeUnit);
+    Span span = helper.buildSpan("listPrepend");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listPrepend(docId, element, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2842,7 +2970,16 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean listPrepend(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.listPrepend(docId, element, mutationOptionBuilder);
+    Span span = helper.buildSpan("listPrepend");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.listPrepend(docId, element, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2851,14 +2988,35 @@ public class TracingBucket implements Bucket {
   public <E> boolean listPrepend(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.listPrepend(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("listPrepend");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listPrepend(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> boolean listSet(String docId, int index, E element) {
-    return bucket.listSet(docId, index, element);
+    Span span = helper.buildSpan("listSet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    try {
+      return bucket.listSet(docId, index, element);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2866,7 +3024,19 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean listSet(String docId, int index, E element, long timeout,
       TimeUnit timeUnit) {
-    return bucket.listSet(docId, index, element, timeout, timeUnit);
+    Span span = helper.buildSpan("listSet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listSet(docId, index, element, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2874,7 +3044,17 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean listSet(String docId, int index, E element,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.listSet(docId, index, element, mutationOptionBuilder);
+    Span span = helper.buildSpan("listSet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    try {
+      return bucket.listSet(docId, index, element, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2883,28 +3063,69 @@ public class TracingBucket implements Bucket {
   public <E> boolean listSet(String docId, int index, E element,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.listSet(docId, index, element, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("listSet");
+    span.setTag("docId", nullable(docId));
+    span.setTag("index", index);
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listSet(docId, index, element, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int listSize(String docId) {
-    return bucket.listSize(docId);
+    Span span = helper.buildSpan("listSize");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.listSize(docId);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int listSize(String docId, long timeout, TimeUnit timeUnit) {
-    return bucket.listSize(docId, timeout, timeUnit);
+    Span span = helper.buildSpan("listSize");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.listSize(docId, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> boolean setAdd(String docId, E element) {
-    return bucket.setAdd(docId, element);
+    Span span = helper.buildSpan("setAdd");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.setAdd(docId, element);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2912,7 +3133,18 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean setAdd(String docId, E element, long timeout,
       TimeUnit timeUnit) {
-    return bucket.setAdd(docId, element, timeout, timeUnit);
+    Span span = helper.buildSpan("setAdd");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.setAdd(docId, element, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2920,7 +3152,16 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean setAdd(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.setAdd(docId, element, mutationOptionBuilder);
+    Span span = helper.buildSpan("setAdd");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.setAdd(docId, element, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2929,14 +3170,34 @@ public class TracingBucket implements Bucket {
   public <E> boolean setAdd(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.setAdd(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("setAdd");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.setAdd(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> boolean setContains(String docId, E element) {
-    return bucket.setContains(docId, element);
+    Span span = helper.buildSpan("setContains");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.setContains(docId, element);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2944,21 +3205,52 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean setContains(String docId, E element, long timeout,
       TimeUnit timeUnit) {
-    return bucket.setContains(docId, element, timeout, timeUnit);
+    Span span = helper.buildSpan("setContains");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.setContains(docId, element, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> E setRemove(String docId, E element) {
-    return bucket.setRemove(docId, element);
+    Span span = helper.buildSpan("setRemove");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.setRemove(docId, element);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> E setRemove(String docId, E element, long timeout, TimeUnit timeUnit) {
-    return bucket.setRemove(docId, element, timeout, timeUnit);
+    Span span = helper.buildSpan("setRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.setRemove(docId, element, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2966,7 +3258,16 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> E setRemove(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.setRemove(docId, element, mutationOptionBuilder);
+    Span span = helper.buildSpan("setRemove");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.setRemove(docId, element, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -2975,28 +3276,68 @@ public class TracingBucket implements Bucket {
   public <E> E setRemove(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.setRemove(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("setRemove");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.setRemove(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int setSize(String docId) {
-    return bucket.setSize(docId);
+    Span span = helper.buildSpan("setSize");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.setSize(docId);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int setSize(String docId, long timeout, TimeUnit timeUnit) {
-    return bucket.setSize(docId, timeout, timeUnit);
+    Span span = helper.buildSpan("setSize");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.setSize(docId, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> boolean queuePush(String docId, E element) {
-    return bucket.queuePush(docId, element);
+    Span span = helper.buildSpan("queuePush");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.queuePush(docId, element);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -3004,7 +3345,18 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean queuePush(String docId, E element, long timeout,
       TimeUnit timeUnit) {
-    return bucket.queuePush(docId, element, timeout, timeUnit);
+    Span span = helper.buildSpan("queuePush");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.queuePush(docId, element, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -3012,7 +3364,16 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> boolean queuePush(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.queuePush(docId, element, mutationOptionBuilder);
+    Span span = helper.buildSpan("queuePush");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.queuePush(docId, element, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -3021,14 +3382,35 @@ public class TracingBucket implements Bucket {
   public <E> boolean queuePush(String docId, E element,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.queuePush(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("queuePush");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.queuePush(docId, element, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public <E> E queuePop(String docId, Class<E> elementType) {
-    return bucket.queuePop(docId, elementType);
+    Span span = helper.buildSpan("queuePop");
+    span.setTag("docId", nullable(docId));
+    span.setTag("elementType", nullable(elementType));
+    try {
+      return bucket.queuePop(docId, elementType);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -3036,7 +3418,19 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> E queuePop(String docId, Class<E> elementType, long timeout,
       TimeUnit timeUnit) {
-    return bucket.queuePop(docId, elementType, timeout, timeUnit);
+    Span span = helper.buildSpan("queuePop");
+    span.setTag("docId", nullable(docId));
+    span.setTag("elementType", nullable(elementType));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.queuePop(docId, elementType, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -3044,7 +3438,17 @@ public class TracingBucket implements Bucket {
   @Public
   public <E> E queuePop(String docId, Class<E> elementType,
       MutationOptionBuilder mutationOptionBuilder) {
-    return bucket.queuePop(docId, elementType, mutationOptionBuilder);
+    Span span = helper.buildSpan("queuePop");
+    span.setTag("docId", nullable(docId));
+    span.setTag("elementType", nullable(elementType));
+    try {
+      return bucket.queuePop(docId, elementType, mutationOptionBuilder);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
@@ -3053,21 +3457,53 @@ public class TracingBucket implements Bucket {
   public <E> E queuePop(String docId, Class<E> elementType,
       MutationOptionBuilder mutationOptionBuilder,
       long timeout, TimeUnit timeUnit) {
-    return bucket.queuePop(docId, elementType, mutationOptionBuilder, timeout, timeUnit);
+    Span span = helper.buildSpan("queuePop");
+    span.setTag("docId", nullable(docId));
+    span.setTag("elementType", nullable(elementType));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.queuePop(docId, elementType, mutationOptionBuilder, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int queueSize(String docId) {
-    return bucket.queueSize(docId);
+    Span span = helper.buildSpan("queueSize");
+    span.setTag("docId", nullable(docId));
+    try {
+      return bucket.queueSize(docId);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
   @Committed
   @Public
   public int queueSize(String docId, long timeout, TimeUnit timeUnit) {
-    return bucket.queueSize(docId, timeout, timeUnit);
+    Span span = helper.buildSpan("queueSize");
+    span.setTag("docId", nullable(docId));
+    span.setTag("timeout", timeout);
+    span.setTag("timeUnit", nullable(timeUnit));
+    try {
+      return bucket.queueSize(docId, timeout, timeUnit);
+    } catch (Exception e) {
+      onError(e, span);
+      throw e;
+    } finally {
+      span.finish();
+    }
   }
 
   @Override
