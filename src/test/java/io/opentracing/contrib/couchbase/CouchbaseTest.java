@@ -1,3 +1,16 @@
+/*
+ * Copyright 2018 The OpenTracing Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package io.opentracing.contrib.couchbase;
 
 import static org.junit.Assert.assertEquals;
@@ -19,16 +32,16 @@ import com.couchbase.client.java.query.N1qlQueryRow;
 import io.opentracing.mock.MockSpan;
 import io.opentracing.mock.MockTracer;
 import io.opentracing.tag.Tags;
-import io.opentracing.util.ThreadLocalScopeManager;
 import java.util.List;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CouchbaseTest {
 
-  private MockTracer mockTracer = new MockTracer(new ThreadLocalScopeManager(),
-      MockTracer.Propagator.TEXT_MAP);
+  private MockTracer mockTracer = new MockTracer();
   private Cluster cluster;
   private ClusterManager clusterManager;
   private final String bucketName = "default";
@@ -36,11 +49,19 @@ public class CouchbaseTest {
   @Before
   public void before() {
     cluster = new TracingCluster(CouchbaseCluster.create("localhost"), mockTracer, false);
-    cluster.authenticate("Administrator", "password");
-    clusterManager = cluster.clusterManager("Administrator", "password");
+    String username = "Administrator";
+    String password = "password";
+    cluster.authenticate(username, password);
+    clusterManager = cluster.clusterManager(username, password);
+  }
+
+  @After
+  public void after() {
+    cluster.disconnect();
   }
 
   @Test
+  @Ignore
   public void test() {
     boolean bucketCreated = createBucketIfMissing();
 
@@ -74,11 +95,9 @@ public class CouchbaseTest {
       System.out.println(row);
     }
 
-    cluster.disconnect();
-
     Assert.assertNull(mockTracer.activeSpan());
 
-    int spansCount = 6;
+    int spansCount = 5;
     if (bucketCreated) {
       spansCount += 1;
     }
