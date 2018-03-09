@@ -42,6 +42,10 @@ public class TracingCluster implements Cluster {
   private final Tracer tracer;
   private final boolean traceWithActiveSpanOnly;
 
+  public TracingCluster(Cluster cluster, Tracer tracer) {
+    this(cluster, tracer, false);
+  }
+
   public TracingCluster(Cluster cluster, Tracer tracer, boolean traceWithActiveSpanOnly) {
     this.cluster = cluster;
     this.tracer = tracer;
