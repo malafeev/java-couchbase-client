@@ -36,7 +36,8 @@ For async API [RxJava instrumentation](https://github.com/opentracing-contrib/ja
 // Decorate RxJava Subscriber  with TracingSubscriber
 Subscriber<JsonDocument> subscriber = ...
 
-Subscriber<JsonDocument> tracingSubscriber = new TracingSubscriber<>(subscriber, "get", tracer);
+Subscriber<JsonDocument> tracingSubscriber = new TracingSubscriber<>(subscriber, "get", 
+    "java-couchbase", tracer);
 
 bucket
     .async()
@@ -55,7 +56,7 @@ Action1<JsonDocument> onNext = new Action1<JsonDocument>() {
 };
 
 TracingActionSubscriber<JsonDocument> tracingActionSubscriber = new TracingActionSubscriber<>(
-    onNext, "get", tracer);
+    onNext, "get", "java-couchbase", tracer);
 
 bucket
     .async()
@@ -70,7 +71,7 @@ bucket
 Observer<JsonDocument> observer = ...
 
 TracingObserverSubscriber<Integer> tracingSubscriber = new TracingObserverSubscriber(observer, 
-    "get", tracer);
+    "get", "java-couchbase", tracer);
 
 bucket
     .async()

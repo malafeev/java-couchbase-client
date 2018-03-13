@@ -13,7 +13,10 @@
  */
 package io.opentracing.contrib.couchbase;
 
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.couchbase.client.java.Bucket;
@@ -29,16 +32,31 @@ import com.couchbase.client.java.document.json.JsonObject;
 import com.couchbase.client.java.query.N1qlQuery;
 import com.couchbase.client.java.query.N1qlQueryResult;
 import com.couchbase.client.java.query.N1qlQueryRow;
+import io.opentracing.Span;
 import io.opentracing.mock.MockSpan;
 import io.opentracing.mock.MockTracer;
+import io.opentracing.rxjava.TracingActionSubscriber;
+import io.opentracing.rxjava.TracingObserverSubscriber;
+import io.opentracing.rxjava.TracingRxJavaUtils;
+import io.opentracing.rxjava.TracingSubscriber;
 import io.opentracing.tag.Tags;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import rx.Completable.OnSubscribe;
+import rx.Observer;
+import rx.Subscriber;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.plugins.RxJavaHooks;
 
+@Ignore
 public class CouchbaseTest {
 
   private MockTracer mockTracer = new MockTracer();
@@ -61,7 +79,6 @@ public class CouchbaseTest {
   }
 
   @Test
-  @Ignore
   public void test() {
     boolean bucketCreated = createBucketIfMissing();
 
@@ -113,6 +130,178 @@ public class CouchbaseTest {
     }
   }
 
+  @Test
+  public void asyncAction() {
+    final Bucket bucket = cluster.openBucket(bucketName);
+
+    TracingRxJavaUtils.enableTracing(mockTracer);
+
+    RxJavaHooks.setOnCompletableCreate(new Func1<OnSubscribe, OnSubscribe>() {
+      @Override
+      public OnSubscribe call(OnSubscribe onSubscribe) {
+        return onSubscribe;
+      }
+    });
+
+    Action1<JsonDocument> onNext = new Action1<JsonDocument>() {
+      @Override
+      public void call(JsonDocument document) {
+        Span span = mockTracer.activeSpan();
+        System.out.println(document.id());
+      }
+    };
+
+    Action1<Throwable> onError = new Action1<Throwable>() {
+      @Override
+      public void call(Throwable throwable) {
+        Span span = mockTracer.activeSpan();
+        System.out.println(throwable.toString());
+      }
+    };
+
+    Action0 onCompleted = new Action0() {
+      @Override
+      public void call() {
+        Span span = mockTracer.activeSpan();
+        System.out.println("onCompleted");
+      }
+    };
+
+    final TracingActionSubscriber<JsonDocument> tracingActionSubscriber = new TracingActionSubscriber<>(
+        onNext, onError, onCompleted, "get", "java-couchbase", mockTracer);
+
+
+    bucket
+        .async()
+        .get("u:king_arthur")
+        .map(new Func1<JsonDocument, JsonDocument>() {
+          @Override
+          public JsonDocument call(JsonDocument document) {
+            Span span = mockTracer.activeSpan();
+            Span span1 = tracingActionSubscriber.getSpan();
+
+            return document;
+          }
+        })
+        .subscribe(tracingActionSubscriber);
+
+    await().atMost(15, TimeUnit.SECONDS).until(reportedSpansSize(), equalTo(2));
+
+    List<MockSpan> spans = mockTracer.finishedSpans();
+    assertEquals(2, spans.size());
+
+    assertNull(mockTracer.activeSpan());
+
+
+  }
+
+  @Test
+  public void asyncObserver() {
+    final Bucket bucket = cluster.openBucket(bucketName);
+
+    TracingRxJavaUtils.enableTracing(mockTracer);
+
+    Observer<JsonDocument> observer = new Observer<JsonDocument>() {
+      @Override
+      public void onCompleted() {
+
+        Span span = mockTracer.activeSpan();
+        System.out.println("completed");
+      }
+
+      @Override
+      public void onError(Throwable e) {
+
+      }
+
+      @Override
+      public void onNext(JsonDocument document) {
+        Span span = mockTracer.activeSpan();
+        System.out.println(document.id());
+      }
+    };
+
+    TracingObserverSubscriber<JsonDocument> tracingObserverSubscriber = new TracingObserverSubscriber<>(
+        observer, "get", mockTracer);
+
+    bucket
+        .async()
+        .get("u:king_arthur")
+        .map(new Func1<JsonDocument, JsonDocument>() {
+          @Override
+          public JsonDocument call(JsonDocument document) {
+            Span span = mockTracer.activeSpan();
+            return document;
+          }
+        })
+        .subscribe(tracingObserverSubscriber);
+
+    await().atMost(15, TimeUnit.SECONDS).until(reportedSpansSize(), equalTo(2));
+
+    List<MockSpan> spans = mockTracer.finishedSpans();
+    assertEquals(2, spans.size());
+
+    assertNull(mockTracer.activeSpan());
+  }
+
+  @Test
+  public void testAsyncSubscriber() {
+    final Bucket bucket = cluster.openBucket(bucketName);
+
+    TracingRxJavaUtils.enableTracing(mockTracer);
+
+    Subscriber<JsonDocument> subscriber = new Subscriber<JsonDocument>() {
+      @Override
+      public void onCompleted() {
+        Span span = mockTracer.activeSpan();
+        System.out.println("onCompleted");
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Span span = mockTracer.activeSpan();
+        e.printStackTrace();
+      }
+
+      @Override
+      public void onNext(JsonDocument document) {
+        Span span = mockTracer.activeSpan();
+        System.out.println(document.id());
+      }
+    };
+
+    TracingSubscriber<JsonDocument> tracingSubscriber = new TracingSubscriber<>(subscriber, "get",
+        mockTracer);
+
+    bucket
+        .async()
+        .get("u:king_arthur")
+        .map(new Func1<JsonDocument, JsonDocument>() {
+          @Override
+          public JsonDocument call(JsonDocument document) {
+            Span span = mockTracer.activeSpan();
+            return document;
+          }
+        })
+        .subscribe(tracingSubscriber);
+
+    await().atMost(15, TimeUnit.SECONDS).until(reportedSpansSize(), equalTo(2));
+
+    List<MockSpan> spans = mockTracer.finishedSpans();
+    assertEquals(2, spans.size());
+
+    assertNull(mockTracer.activeSpan());
+  }
+
+  private Callable<Integer> reportedSpansSize() {
+    return new Callable<Integer>() {
+      @Override
+      public Integer call() {
+        return mockTracer.finishedSpans().size();
+      }
+    };
+  }
+
   private boolean createBucketIfMissing() {
     if (clusterManager.getBucket(bucketName) == null) {
 
@@ -127,5 +316,8 @@ public class CouchbaseTest {
     }
     return false;
   }
-
 }
+
+
+
+// TODO: async with parent
